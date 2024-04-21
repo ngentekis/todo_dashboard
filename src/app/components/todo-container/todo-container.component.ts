@@ -19,7 +19,7 @@ import { TodoService } from "../../services/todo.service";
         <p
         *ngFor="let todoItem of todoList"
         
-        >{{todoItem.desc}}</p>
+        >{{todoItem.td_desc}}</p>
     </section>
     `,
     styleUrl: './todo-container.component.css'

@@ -12,17 +12,9 @@ export class TodoService {
     const data = await fetch(`${this.url}get-todo`);
 
     const response = await data.json();
-    console.log(response);
+
     return response ? response : [];
   }
-
-  // async getAllTodoItems(): Promise<Todo[]> {
-  //   const todo = [
-  //     { desc: "hello"}
-  //   ];
-
-  //   return todo;
-  // }
 
   constructor() { }
 }

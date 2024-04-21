@@ -1,5 +1,5 @@
 export interface Todo {
-    //id: number;
-    desc: string;
-    //completed: boolean;
+    id: number;
+    td_desc: string;
+    td_status: boolean;
 }
