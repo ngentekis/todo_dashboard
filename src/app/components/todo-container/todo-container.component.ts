@@ -3,6 +3,8 @@ import { Component, inject } from "@angular/core";
 import { AddTodoContainer } from "../add-todo/add-todo.component";
 import { Todo } from "../../models/todo";
 import { TodoService } from "../../services/todo.service";
+import { Observable } from "rxjs";
+import { Store } from "@ngrx/store";
 
 @Component({
     selector: 'todo-container',
@@ -17,7 +19,7 @@ import { TodoService } from "../../services/todo.service";
     </section>    
     <section>
         <p
-        *ngFor="let todoItem of todoList"
+        *ngFor="let todoItem of todos$ | async"
         
         >{{todoItem.td_desc}}</p>
     </section>
@@ -25,13 +27,13 @@ import { TodoService } from "../../services/todo.service";
     styleUrl: './todo-container.component.css'
 })
 export class TodoContainer {
+    
+    todos$: Observable<Todo[]> = this.store.select(state => state.todo);
 
-    todoList: Todo[] = [];
-    todoService: TodoService = inject(TodoService);
+    constructor(private store: Store<{todo: Todo[]}>) {
+    }
 
-    constructor() {
-        this.todoService.getAllTodoItems().then((res: Todo[]) => {
-            this.todoList = res;
-        })
+    ngOnInit() {
+        this.store.dispatch({type: '[Todo Component] Load'});
     }
 }

@@ -7,15 +7,18 @@ import { Config } from '../../../config/config';
 })
 export class TodoService {
 
-  config: Config = require('../../../config/config.json');
-  url = this.config.apiUri;
+  private config: Config = require('../../../config/config.json');
+  private url = this.config.apiUri;
+  public items: Todo[] = [];
   
   async getAllTodoItems(): Promise<Todo[]> {
     const data = await fetch(`${this.url}/get-todo`);
 
     const response = await data.json();
 
-    return response ? response : [];
+    this.items = response ? response : this.items;
+
+    return response
   }
 
   async addTodoItem(td_desc: String): Promise<void> {
@@ -24,11 +27,10 @@ export class TodoService {
     const response = await fetch(`${this.url}/add-todo`, {
       method: "POST",
       mode: "cors",
-      cache: "no-cache",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",        
       },
-      body: JSON.stringify(data)    
+      body: JSON.stringify(data)
     });
 
     console.log(response.status);
